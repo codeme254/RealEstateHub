@@ -26,6 +26,16 @@ mongoose
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 
+app.use((error, _, res, __) => {
+  const statusCode = error.statusCode || 500;
+  const message = error.message || "Internal server error";
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+  });
+});
+
 app.listen(3000, () => {
   console.log(`Server running on port 3000...`);
 });

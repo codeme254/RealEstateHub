@@ -7,6 +7,7 @@ import authRouter from "./routes/auth.route.js";
 
 dotenv.config();
 const app = express();
+app.use(express.json());
 
 app.get("/", (_, res) => {
   res.json({ message: "Welcome to RealEstate API..." });

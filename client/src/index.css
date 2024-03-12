@@ -1,20 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-
 *,
 *::after,
 *::before {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
 }
 
 html {
   font-size: 62.5%;
-}
-
-html,
-body {
-  overflow-x: hidden;
 }
 
 :root {
@@ -26,9 +22,15 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --color-primary: #102c57;
+  --color-secondary: #dac0a3;
+  --color-secondary-light: #eadbc8;
+  --color-secondary-ligheter: #f8f0e5;
+  --color-white: #fff;
+  --color-black: #000;
 }
 
 body {
   font-size: 1.6rem;
-  line-height: 1.7;
 }

@@ -13,6 +13,11 @@ html {
   font-size: 62.5%;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 :root {
   font-family: "Poppins", sans-serif;
   line-height: 1.5;
@@ -26,7 +31,7 @@ html {
   --color-primary: #102c57;
   --color-secondary: #dac0a3;
   --color-secondary-light: #eadbc8;
-  --color-secondary-ligheter: #f8f0e5;
+  --color-secondary-lighter: #f8f0e5;
   --color-white: #fff;
   --color-black: #000;
 }

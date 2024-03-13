@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./header.css";
 import { IoIosMenu } from "react-icons/io";
+import { Link } from "react-router-dom";
 
 function Header() {
   const [revealNav, setRevealNav] = useState(false);
@@ -27,13 +28,13 @@ function Header() {
       <nav className="header__nav" ref={navRef}>
         <ol className="header__nav-list">
           <li className="header__nav-item">
-            <a href="">Home</a>
+            <Link to="/">Home</Link>
           </li>
           <li className="header__nav-item">
-            <a href="">about</a>
+            <Link to="/about">about</Link>
           </li>
           <li className="header__nav-item">
-            <a href="">sign in</a>
+            <Link to="/sign-in">sign in</Link>
           </li>
         </ol>
       </nav>

@@ -17,7 +17,12 @@ export const signUp = async (req, res, next) => {
       userType,
     });
     await newUser.save();
-    res.status(201).json(`Account for ${username} successfully created.`);
+    res
+      .status(201)
+      .json({
+        message: `Account for ${username} successfully created.`,
+        success: true,
+      });
   } catch (error) {
     next(error);
   }
@@ -32,11 +37,11 @@ export const signIn = async (req, res, next) => {
     if (!validPassword)
       return next(errorHandler(402, "Invalid login credentials"));
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
-    const { password: pass, ...others } = user._doc;
+    const { password: pass, ...data } = user._doc;
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
-      .json(others);
+      .json({ data, success: true });
   } catch (error) {
     next(error);
   }

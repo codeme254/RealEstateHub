@@ -51,3 +51,7 @@ body {
 body {
   font-size: 1.6rem;
 }
+
+button:disabled {
+  background-color: #999;
+}

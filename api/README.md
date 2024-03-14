@@ -1,0 +1,1 @@
+userType -> "normal", "demo"

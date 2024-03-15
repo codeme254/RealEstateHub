@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signin.css";
 import { IoLogoGoogle } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../src/redux/user";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleFormData = (e) => {
     e.preventDefault();
     setFormData({
@@ -29,6 +32,7 @@ function SignIn() {
       });
       const data = await res.json();
       if (data.success) {
+        dispatch(loginSuccess(data.data));
         navigate("/profile");
       } else {
         console.log("no success, let's see the error");

@@ -59,11 +59,10 @@ export const registerDemoUser = async (_, res, __) => {
       .status(200)
       .json({ data, success: true });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "something went wrong, pleae try again",
-      });
+    console.log(err.message);
+    res.status(500).json({
+      success: false,
+      message: "something went wrong, pleae try again",
+    });
   }
 };

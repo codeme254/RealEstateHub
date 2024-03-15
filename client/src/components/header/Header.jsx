@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { RxAvatar } from "react-icons/rx";
 import { logout } from "../../redux/user";
+import defaultImgForDemoUser from "../../assets/default-img-for-demo-users.jpg";
 // import sampleUserImg from "../../assets/sample-user-img.jpg";
 
 function Header() {
@@ -69,10 +70,18 @@ function Header() {
                     src={user.profilePictureUrl}
                     className="user__avatar-name--avatar"
                   />
+                ) : user.userType == "demo-user" ? (
+                  <img
+                    src={defaultImgForDemoUser}
+                    alt="avatar"
+                    className="user__avatar-name--avatar"
+                  />
                 ) : (
                   <RxAvatar />
                 )}
-                <p className="user__avatar-name--name">{user.username}</p>
+                <p className="user__avatar-name--name">
+                  {user.userType == "demo-user" ? user.lastName : user.username}
+                </p>
               </Link>
             </li>
           )}

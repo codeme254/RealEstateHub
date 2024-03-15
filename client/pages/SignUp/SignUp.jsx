@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
 import { IoLogoGoogle } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../src/redux/user";
 import axios from "axios";
 
 function SignUp() {
   // firstName, lastName, username, emailAddress, password
   const [formData, setFormData] = useState({ userType: "normal-user" });
   const [loading, setLoading] = useState(false);
+  const [creatingDemoUser, setCreatingDemoUser] = useState(false);
   const [signUpError, setSignUpError] = useState(null);
+  const [demoError, setDemoError] = useState(null);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({
@@ -37,6 +42,31 @@ function SignUp() {
     } catch (error) {
       console.error("Error:", error);
       setLoading(false);
+    }
+  };
+
+  const signUpDemo = async (e) => {
+    e.preventDefault();
+    try {
+      setCreatingDemoUser(true);
+      const response = await fetch("/api/auth/signup/demo", {
+        method: "POST",
+      });
+      const data = await response.json();
+      if (data.success == true) {
+        dispatch(loginSuccess(data.data));
+        navigate("/profile");
+      } else {
+        setDemoError(
+          "Something went wrong generating demo account, please try again",
+        );
+      }
+      setCreatingDemoUser(false);
+    } catch (e) {
+      setDemoError(
+        "Something went wrong generating demo account, please try again",
+      );
+      setCreatingDemoUser(false);
     }
   };
   return (
@@ -103,22 +133,35 @@ function SignUp() {
             />
           </div>
           <div className="form__group--control">
-            <button className="form__group--btn" disabled={loading}>
+            <button
+              className="form__group--btn"
+              disabled={loading || creatingDemoUser}
+            >
               {loading ? "please wait ..." : "sign up"}
             </button>
-            <button className="form__group--btn" type="button">
+            <button
+              className="form__group--btn"
+              type="button"
+              disabled={loading || creatingDemoUser}
+            >
               {" "}
               <IoLogoGoogle />
               continue with google
             </button>
-            <button className="form__group--btn" type="button">
-              Demo
+            <button
+              className="form__group--btn"
+              type="button"
+              onClick={signUpDemo}
+              disabled={creatingDemoUser}
+            >
+              {creatingDemoUser ? "Please wait..." : "Demo"}
             </button>
           </div>
           <p className="form__txt">
             Already have an account? <Link to="/sign-in">Sign In</Link>
           </p>
           {signUpError && <p className="form__txt">{signUpError}</p>}
+          {demoError && <p className="form__txt">{demoError}</p>}
         </form>
       </div>
     </div>

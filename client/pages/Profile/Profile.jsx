@@ -13,8 +13,25 @@ function Profile() {
     <div className="profile">
       {user && (
         <h3 className="profile__welcome">
-          Hey {user.username}, welcome to your profile
+          Hey{" "}
+          {user.userType == "demo-user"
+            ? `${user.lastName}`
+            : `${user.username}`}
+          , welcome to your profile
         </h3>
+      )}
+      {user && user.userType == "demo-user" ? (
+        <p className="demo-user-info">
+          Hey{" "}
+          <span className="demo-user-info__bold">
+            {`${user.firstName} ${user.lastName}, `}{" "}
+          </span>
+          as a demo user, you cannot update your account, feel free to explore
+          RealEstateHub though with limited functionalities. Create an account
+          to unlock full access.
+        </p>
+      ) : (
+        ""
       )}
       <div className="profile__body-wrapper">
         <div className="profile__form-cover">
@@ -49,7 +66,12 @@ function Profile() {
                 <input type="password" id="password" />
               </div>
               <div className="form__controls">
-                <button className="form__controls--btn">Update account</button>
+                <button
+                  className="form__controls--btn"
+                  disabled={user.userType == "demo-user"}
+                >
+                  Update account
+                </button>
                 <button className="form__controls--btn">Sign out</button>
                 <button className="form__controls--btn btn-delete">
                   Delete Account
@@ -59,11 +81,15 @@ function Profile() {
           )}
         </div>
         <div className="profile__listing">
-          <p>
-            {user && `${user.username}, `}you have not created or saved any
-            listings yet, once you create or save a listing, you will be able to
-            see it here
-          </p>
+          {user && (
+            <p>
+              {user && user.userType == "demo-user"
+                ? `${user.lastName}, `
+                : `${user.username}, `}
+              you have not created or saved any listings yet, once you create or
+              save a listing, you will be able to see it here
+            </p>
+          )}
           <div className="profile__listing--explore">
             <Link className="profile__listing--new-btn" to="/new-listing">
               Create Listing

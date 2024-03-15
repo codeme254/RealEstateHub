@@ -5,6 +5,21 @@
   margin-bottom: 2rem;
 }
 
+.demo-user-info {
+  width: max-content;
+  margin: 0.5rem auto;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  background-color: #ffc107;
+  font-size: 1.2rem;
+  border-radius: 3px;
+}
+
+.demo-user-info__bold {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 .profile__body-wrapper {
   width: 80vw;
   display: flex;
@@ -80,4 +95,28 @@
   cursor: pointer;
   margin-top: 3rem;
   text-transform: capitalize;
+}
+
+@media screen and (max-width: 62.5em) {
+  .profile__body-wrapper {
+    width: 98vw;
+  }
+}
+@media screen and (max-width: 59.375em) {
+  .demo-user-info {
+    width: 100%;
+    text-align: center;
+  }
+}
+@media screen and (max-width: 43.75em) {
+  .profile__body-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .profile__body-wrapper > * {
+    width: 100%;
+  }
 }

@@ -45,6 +45,14 @@ function Header() {
             <Link to="/about">about</Link>
           </li>
           <li className="header__nav-item">
+            <Link to="/listing">listing</Link>
+          </li>
+          {user && (
+            <li className="header__nav-item">
+              <Link to="/new-listing">create listing</Link>
+            </li>
+          )}
+          <li className="header__nav-item">
             {user ? (
               <Link to="/" onClick={handleSignOut}>
                 sign out

@@ -59,6 +59,27 @@
   height: var(--size);
 }
 
+.user__avatar-name {
+  display: flex !important;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user__avatar-name svg {
+  --size: 3rem;
+  width: var(--size);
+  height: var(--size);
+}
+
+.user__avatar-name--avatar {
+  --size: 3rem;
+  width: var(--size);
+  height: var(--size);
+  max-width: var(--size);
+  max-height: var(--size);
+  border-radius: 50%;
+}
+
 @media screen and (max-width: 500px) {
   .header {
     align-items: flex-start;

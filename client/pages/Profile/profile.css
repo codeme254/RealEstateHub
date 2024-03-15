@@ -1,0 +1,83 @@
+.profile__welcome {
+  text-align: center;
+  margin-top: 2rem;
+  text-transform: capitalize;
+  margin-bottom: 2rem;
+}
+
+.profile__body-wrapper {
+  width: 80vw;
+  display: flex;
+  margin: 0 auto;
+}
+
+.profile__body-wrapper > * {
+  width: 50%;
+}
+
+.profile__form {
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+
+.profile__form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+.profile__form-group label {
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.profile__form-group input {
+  padding: 1rem;
+  font-weight: bold;
+}
+
+.form__controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form__controls--btn {
+  border: none;
+  outline: none;
+  padding: 1rem 2rem;
+  background-color: var(--color-primary);
+  font-weight: 600;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-delete {
+  background-color: crimson;
+}
+
+.profile__listing {
+  padding: 2rem;
+  text-align: center;
+}
+
+.profile__listing--explore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.profile__listing--new-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background-color: var(--color-secondary);
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 3rem;
+  text-transform: capitalize;
+}

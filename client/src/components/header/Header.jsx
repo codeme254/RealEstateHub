@@ -2,14 +2,16 @@ import React, { useState, useRef } from "react";
 import "./header.css";
 import { IoIosMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RxAvatar } from "react-icons/rx";
-import sampleUserImg from "../../assets/sample-user-img.jpg";
+import { logout } from "../../redux/user";
+// import sampleUserImg from "../../assets/sample-user-img.jpg";
 
 function Header() {
   const [revealNav, setRevealNav] = useState(false);
   const navRef = useRef(null);
   const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
 
   const handleRevealNav = (e) => {
     e.preventDefault();
@@ -19,6 +21,11 @@ function Header() {
     } else {
       navRef.current.classList.remove("header__nav--reveal");
     }
+  };
+
+  const handleSignOut = (e) => {
+    e.preventDefault();
+    dispatch(logout());
   };
   return (
     <header className="header">
@@ -39,24 +46,28 @@ function Header() {
           </li>
           <li className="header__nav-item">
             {user ? (
-              <Link to="/">sign out</Link>
+              <Link to="/" onClick={handleSignOut}>
+                sign out
+              </Link>
             ) : (
               <Link to="/sign-in">sign in</Link>
             )}
           </li>
-          <li className="header__nav-item">
-            <Link to="/profile" className="user__avatar-name">
-              {user.profilePictureUrl ? (
-                <img
-                  src={user.profilePictureUrl}
-                  className="user__avatar-name--avatar"
-                />
-              ) : (
-                <RxAvatar />
-              )}
-              <p className="user__avatar-name--name">{user.username}</p>
-            </Link>
-          </li>
+          {user && (
+            <li className="header__nav-item">
+              <Link to="/profile" className="user__avatar-name">
+                {user.profilePictureUrl ? (
+                  <img
+                    src={user.profilePictureUrl}
+                    className="user__avatar-name--avatar"
+                  />
+                ) : (
+                  <RxAvatar />
+                )}
+                <p className="user__avatar-name--name">{user.username}</p>
+              </Link>
+            </li>
+          )}
         </ol>
       </nav>
     </header>

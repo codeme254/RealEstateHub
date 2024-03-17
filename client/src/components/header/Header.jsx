@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./header.css";
 import { IoIosMenu } from "react-icons/io";
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import defaultImgForDemoUser from "../../assets/default-img-for-demo-users.jpg";
 
 function Header() {
   const [revealNav, setRevealNav] = useState(false);
+  const [userAvatar, setUserAvatar] = useState(null);
   const navRef = useRef(null);
   const user = useSelector((state) => state.user.value);
   const dispatch = useDispatch();
@@ -23,6 +24,12 @@ function Header() {
       navRef.current.classList.remove("header__nav--reveal");
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      if (user.profilePictureUrl) setUserAvatar(user.profilePictureUrl);
+    }
+  }, [user]);
 
   const handleSignOut = (e) => {
     e.preventDefault();
@@ -66,10 +73,7 @@ function Header() {
             <li className="header__nav-item">
               <Link to="/profile" className="user__avatar-name">
                 {user.profilePictureUrl ? (
-                  <img
-                    src={user.profilePictureUrl}
-                    className="user__avatar-name--avatar"
-                  />
+                  <img src={userAvatar} className="user__avatar-name--avatar" />
                 ) : user.userType == "demo-user" ? (
                   <img
                     src={defaultImgForDemoUser}

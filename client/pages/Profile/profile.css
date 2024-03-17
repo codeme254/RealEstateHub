@@ -23,6 +23,24 @@
   margin-bottom: 2rem;
 }
 
+.profile__image--avatar {
+  --size: 8rem;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+}
+
+.update-avatar-btn {
+  padding: 1rem 2rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 5px;
+  text-transform: capitalize;
+}
+
 .btn-image-change {
   display: flex;
   flex-direction: column;

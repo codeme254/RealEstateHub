@@ -1,17 +1,88 @@
-import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import { FaRegPenToSquare } from "react-icons/fa6";
+import { updateUser } from "../../src/redux/user";
+import { randomId } from "../../utils/randomId";
 import "./profile.css";
 
 function Profile() {
   const user = useSelector((state) => state.user.value);
+  const dispatch = useDispatch();
   const fileRef = useRef(null);
   const navigate = useNavigate();
+  const [userInfo, setUserInfo] = useState(null);
+  const [newProfileImage, setNewProfileImage] = useState(null);
+  const [uploadingProfileImage, setUploadingProfileImage] = useState(false);
+  const [uploadAvatarError, setUploadAvatarError] = useState(null);
+
   useEffect(() => {
     if (!user) navigate("/sign-in");
   }, [user]);
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    setUserInfo({
+      ...userInfo,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleProfileImageChange = (e) => {
+    e.preventDefault();
+    setNewProfileImage(e.target.files[0]);
+    // console.log(randomId())
+  };
+
+  const handleChangeProfileImage = async (e) => {
+    if (newProfileImage == null) {
+      setUploadAvatarError("Please choose a new image");
+      setUploadingProfileImage(false);
+      return;
+    }
+    const formData = new FormData();
+    formData.append("file", newProfileImage),
+      formData.append("upload_preset", "RealEstateHub");
+    try {
+      setUploadingProfileImage(true);
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/dz1yrbnpy/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        },
+      );
+      const data = await response.json();
+      if (user) {
+        // user.profilePictureUrl = data.secure_url;
+        // send the profile image update to the backend and the data that comes back is now going to be the user data
+        const response = await fetch(`/api/user/update/${user._id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ profilePictureUrl: data.secure_url }),
+        });
+        const response_data = await response.json();
+        if (response_data.success === true) {
+          dispatch(updateUser(response_data.data));
+        } else {
+          setUploadAvatarError(
+            "There was an error uploading your profile photo. Please try again",
+          );
+        }
+      }
+      setUploadingProfileImage(false);
+    } catch (e) {
+      setUploadAvatarError(
+        "There was an error uploading your avatar. Please try again.",
+      );
+      console.log(e);
+      setUploadingProfileImage(false);
+    }
+  };
+
   return (
     <div className="profile">
       {user && (
@@ -38,17 +109,25 @@ function Profile() {
       )}
       <div className="profile__image">
         {user && user.profilePictureUrl ? (
-          <img src={user.profilePictureUrl} />
+          <img
+            src={newProfileImage ? newProfileImage : user.profilePictureUrl}
+            className="profile__image--avatar"
+          />
+        ) : newProfileImage ? (
+          <img
+            src={newProfileImage}
+            alt=""
+            className="profile__image--avatar"
+          />
         ) : (
           <RxAvatar />
         )}
         <input
           type="file"
           ref={fileRef}
-          name=""
           hidden
-          id=""
           accept="image/*"
+          onChange={handleProfileImageChange}
         />
         <button
           className="btn-image-change"
@@ -57,8 +136,18 @@ function Profile() {
           <span>
             <FaRegPenToSquare />
           </span>{" "}
-          <span>change profile image</span>
+          <span>new profile image</span>
         </button>
+        <div>
+          <button
+            className="update-avatar-btn"
+            onClick={handleChangeProfileImage}
+            disabled={uploadingProfileImage}
+          >
+            {uploadingProfileImage ? "Please wait..." : "Update Profile Image"}
+          </button>
+          <p>{uploadAvatarError && uploadAvatarError}</p>
+        </div>
       </div>
       <div className="profile__body-wrapper">
         <div className="profile__form-cover">
@@ -70,15 +159,26 @@ function Profile() {
                   type="text"
                   id="firstName"
                   defaultValue={user.firstName}
+                  onChange={handleChange}
                 />
               </div>
               <div className="profile__form-group">
                 <label htmlFor="lastName">last name</label>
-                <input type="text" id="lastName" defaultValue={user.lastName} />
+                <input
+                  type="text"
+                  id="lastName"
+                  defaultValue={user.lastName}
+                  onChange={handleChange}
+                />
               </div>
               <div className="profile__form-group">
                 <label htmlFor="username">username</label>
-                <input type="text" id="username" defaultValue={user.username} />
+                <input
+                  type="text"
+                  id="username"
+                  defaultValue={user.username}
+                  onChange={handleChange}
+                />
               </div>
               <div className="profile__form-group">
                 <label htmlFor="emailAddress">email</label>
@@ -86,11 +186,12 @@ function Profile() {
                   type="email"
                   id="emailAddress"
                   defaultValue={user.emailAddress}
+                  onChange={handleChange}
                 />
               </div>
               <div className="profile__form-group">
                 <label htmlFor="password">password</label>
-                <input type="password" id="password" />
+                <input type="password" id="password" onChange={handleChange} />
               </div>
               <div className="form__controls">
                 <button

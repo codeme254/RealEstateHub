@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signin.css";
-import { IoLogoGoogle } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../src/redux/user";
+import { loginSuccess } from "../../../src/redux/user";
+import OAuth from "../../../src/components/OAuth/OAuth";
 
 function SignIn() {
   const [formData, setFormData] = useState({});
@@ -76,11 +76,7 @@ function SignIn() {
             <button className="form__group--btn" disabled={loading}>
               {loading ? "Please wait..." : "sign in"}
             </button>
-            <button className="form__group--btn" type="button">
-              {" "}
-              <IoLogoGoogle />
-              continue with google
-            </button>
+            <OAuth />
           </div>
           <p className="form__txt">
             Don't have an account? <Link to="/sign-up">Sign Up</Link>

@@ -1,13 +1,13 @@
 import "./App.css";
 import Header from "./components/header/Header";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "../pages/Home/Home";
-import About from "../pages/About/About";
-import SignIn from "../pages/SignIn/SignIn";
-import SignUp from "../pages/SignUp/SignUp";
-import Profile from "../pages/Profile/Profile";
-import NewListing from "../pages/NewListing/NewListing";
-import Listing from "../pages/Listing/Listing";
+import Home from "../src/pages/Home/Home";
+import About from "../src/pages/About/About";
+import SignIn from "../src/pages/SignIn/SignIn";
+import SignUp from "../src/pages/SignUp/SignUp";
+import Profile from "../src/pages/Profile/Profile";
+import NewListing from "../src/pages/NewListing/NewListing";
+import Listing from "../src/pages/Listing/Listing";
 
 function App() {
   return (

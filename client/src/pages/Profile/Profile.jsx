@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { updateUser } from "../../src/redux/user";
-import { randomId } from "../../utils/randomId";
+import { updateUser } from "../../../src/redux/user";
+import { randomId } from "../../../utils/randomId";
 import "./profile.css";
 
 function Profile() {

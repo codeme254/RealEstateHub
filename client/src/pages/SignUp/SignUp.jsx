@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
-import { IoLogoGoogle } from "react-icons/io5";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from "../../src/redux/user";
+import { loginSuccess } from "../../../src/redux/user";
 import axios from "axios";
+import OAuth from "../../../src/components/OAuth/OAuth";
 
 function SignUp() {
   // firstName, lastName, username, emailAddress, password
@@ -139,15 +139,7 @@ function SignUp() {
             >
               {loading ? "please wait ..." : "sign up"}
             </button>
-            <button
-              className="form__group--btn"
-              type="button"
-              disabled={loading || creatingDemoUser}
-            >
-              {" "}
-              <IoLogoGoogle />
-              continue with google
-            </button>
+            <OAuth />
             <button
               className="form__group--btn"
               type="button"

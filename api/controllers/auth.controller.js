@@ -66,3 +66,41 @@ export const registerDemoUser = async (_, res, __) => {
     });
   }
 };
+
+export const google = async (req, res, next) => {
+  console.log(req.body);
+  try {
+    const user = await User.findOne({ emailAddress: req.body.emailAddress });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const { password: pass, ...others } = user._doc;
+      return res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json({ success: true, data: others });
+    } else {
+      const generatedPassword = (
+        Date.now().toString(32) + Math.random().toString(16)
+      ).replace(/\./, "");
+      const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
+      const newUser = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        username: req.body.username,
+        emailAddress: req.body.emailAddress,
+        profilePictureUrl: req.body.profilePictureUrl,
+        password: hashedPassword,
+        userType: "normal-user",
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const { password: pass, ...others } = newUser._doc;
+      return res
+        .cookie("access_token", token, { httpOnly: true })
+        .status(200)
+        .json({ success: true, data: others });
+    }
+  } catch (e) {
+    next(e);
+  }
+};

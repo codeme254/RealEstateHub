@@ -16,6 +16,8 @@ function Profile() {
   const [newProfileImage, setNewProfileImage] = useState(null);
   const [uploadingProfileImage, setUploadingProfileImage] = useState(false);
   const [uploadAvatarError, setUploadAvatarError] = useState(null);
+  const [updatingUserInfo, setUpdatingUserInfo] = useState(false);
+  const [updateUserInfoError, setUpdateUserInfoError] = useState(null);
 
   useEffect(() => {
     if (!user) navigate("/sign-in");
@@ -80,6 +82,38 @@ function Profile() {
       );
       console.log(e);
       setUploadingProfileImage(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!userInfo) {
+      setUpdateUserInfoError("Please update your information and try again.");
+      return;
+    }
+    try {
+      setUpdatingUserInfo(true);
+      const response = await fetch(`/api/user/update/${user._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userInfo),
+      });
+      const data = await response.json();
+      if (data.success) {
+        dispatch(updateUser(data.data));
+      } else {
+        setUpdateUserInfoError(
+          "There was a problem updating your information. Please Try again.",
+        );
+      }
+      setUpdatingUserInfo(false);
+    } catch (e) {
+      setUpdatingUserInfo(false);
+      setUpdateUserInfoError(
+        "There was a problem updating your information. Please Try again",
+      );
     }
   };
 
@@ -152,7 +186,7 @@ function Profile() {
       <div className="profile__body-wrapper">
         <div className="profile__form-cover">
           {user && (
-            <form className="profile__form">
+            <form className="profile__form" onSubmit={handleSubmit}>
               <div className="profile__form-group">
                 <label htmlFor="firstName">first name</label>
                 <input
@@ -196,15 +230,24 @@ function Profile() {
               <div className="form__controls">
                 <button
                   className="form__controls--btn"
-                  disabled={user.userType == "demo-user"}
+                  disabled={user.userType == "demo-user" || updatingUserInfo}
                 >
                   Update account
                 </button>
-                <button className="form__controls--btn">Sign out</button>
-                <button className="form__controls--btn btn-delete">
+                <button
+                  className="form__controls--btn"
+                  disabled={updatingUserInfo}
+                >
+                  Sign out
+                </button>
+                <button
+                  className="form__controls--btn btn-delete"
+                  disabled={updatingUserInfo}
+                >
                   Delete Account
                 </button>
               </div>
+              <p>{updateUserInfoError && updateUserInfoError}</p>
             </form>
           )}
         </div>

@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { RxAvatar } from "react-icons/rx";
+import { FaRegPenToSquare } from "react-icons/fa6";
 import "./profile.css";
 
 function Profile() {
   const user = useSelector((state) => state.user.value);
+  const fileRef = useRef(null);
   const navigate = useNavigate();
   useEffect(() => {
     if (!user) navigate("/sign-in");
@@ -33,6 +36,30 @@ function Profile() {
       ) : (
         ""
       )}
+      <div className="profile__image">
+        {user && user.profilePictureUrl ? (
+          <img src={user.profilePictureUrl} />
+        ) : (
+          <RxAvatar />
+        )}
+        <input
+          type="file"
+          ref={fileRef}
+          name=""
+          hidden
+          id=""
+          accept="image/*"
+        />
+        <button
+          className="btn-image-change"
+          onClick={() => fileRef.current.click()}
+        >
+          <span>
+            <FaRegPenToSquare />
+          </span>{" "}
+          <span>change profile image</span>
+        </button>
+      </div>
       <div className="profile__body-wrapper">
         <div className="profile__form-cover">
           {user && (

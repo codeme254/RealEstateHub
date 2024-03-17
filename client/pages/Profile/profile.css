@@ -15,9 +15,43 @@
   border-radius: 3px;
 }
 
+.profile__image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.btn-image-change {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  outline: none;
+  background-color: var(--color-primary);
+  color: #fff;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
 .demo-user-info__bold {
   font-weight: bold;
   text-transform: capitalize;
+}
+
+.profile__image svg {
+  --size: 8rem;
+  width: var(--size);
+  height: var(--size);
+}
+
+.btn-image-change svg {
+  --size: 4rem;
+  width: var(--size);
+  height: var(--size);
 }
 
 .profile__body-wrapper {

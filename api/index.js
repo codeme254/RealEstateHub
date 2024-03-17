@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
 
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
@@ -8,6 +9,7 @@ import authRouter from "./routes/auth.route.js";
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.get("/", (_, res) => {
   res.json({ message: "Welcome to RealEstate API..." });

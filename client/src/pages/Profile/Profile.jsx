@@ -235,12 +235,6 @@ function Profile() {
                   Update account
                 </button>
                 <button
-                  className="form__controls--btn"
-                  disabled={updatingUserInfo}
-                >
-                  Sign out
-                </button>
-                <button
                   className="form__controls--btn btn-delete"
                   disabled={updatingUserInfo}
                 >

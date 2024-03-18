@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signup.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../src/redux/user";
 import axios from "axios";
 import OAuth from "../../../src/components/OAuth/OAuth";
@@ -14,6 +14,7 @@ function SignUp() {
   const [signUpError, setSignUpError] = useState(null);
   const [demoError, setDemoError] = useState(null);
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({
@@ -21,6 +22,11 @@ function SignUp() {
       [e.target.id]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    if (user) navigate("/profile");
+  }, [user]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

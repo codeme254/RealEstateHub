@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./signin.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../../src/redux/user";
 import OAuth from "../../../src/components/OAuth/OAuth";
 
@@ -11,6 +11,12 @@ function SignIn() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.value);
+
+  useEffect(() => {
+    if (user) navigate("/profile");
+  }, [user]);
+
   const handleFormData = (e) => {
     e.preventDefault();
     setFormData({

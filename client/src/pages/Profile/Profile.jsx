@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RxAvatar } from "react-icons/rx";
 import { FaRegPenToSquare } from "react-icons/fa6";
-import { updateUser } from "../../../src/redux/user";
+import { updateUser, logout } from "../../../src/redux/user";
 import { randomId } from "../../../utils/randomId";
 import "./profile.css";
 
@@ -18,6 +18,7 @@ function Profile() {
   const [uploadAvatarError, setUploadAvatarError] = useState(null);
   const [updatingUserInfo, setUpdatingUserInfo] = useState(false);
   const [updateUserInfoError, setUpdateUserInfoError] = useState(null);
+  const [deletingUser, setDeletingUser] = useState(false);
 
   useEffect(() => {
     if (!user) navigate("/sign-in");
@@ -114,6 +115,29 @@ function Profile() {
       setUpdateUserInfoError(
         "There was a problem updating your information. Please Try again",
       );
+    }
+  };
+
+  const handleDeleteAccount = async (e) => {
+    e.preventDefault();
+    setDeletingUser(true);
+    try {
+      const response = await fetch(`/api/user/delete/${user._id}`, {
+        method: "DELETE",
+      });
+      const data = await response.json();
+      if (data.success == true) {
+        dispatch(logout());
+        navigate("/sign-in");
+      } else {
+        alert("There was an error deleting your account, please try again");
+      }
+      setDeletingUser(false);
+    } catch (e) {
+      console.log(
+        "There was an error deleting your account. Please try again.",
+      );
+      setDeletingUser(false);
     }
   };
 
@@ -230,13 +254,18 @@ function Profile() {
               <div className="form__controls">
                 <button
                   className="form__controls--btn"
-                  disabled={user.userType == "demo-user" || updatingUserInfo}
+                  disabled={
+                    user.userType == "demo-user" ||
+                    updatingUserInfo ||
+                    deletingUser
+                  }
                 >
                   Update account
                 </button>
                 <button
                   className="form__controls--btn btn-delete"
-                  disabled={updatingUserInfo}
+                  disabled={updatingUserInfo || deletingUser}
+                  onClick={handleDeleteAccount}
                 >
                   Delete Account
                 </button>

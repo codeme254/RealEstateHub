@@ -1,0 +1,110 @@
+.create-listing-title {
+  text-transform: capitalize;
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.new-listing__form {
+  width: 60%;
+  margin: 2rem auto;
+  border: 1px solid #ccc;
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 56.25em) {
+  .new-listing__form {
+    width: 98%;
+  }
+}
+
+.new-listing__form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.new-listing__form-group--text-input {
+  padding: 1rem;
+  font-weight: 500;
+}
+
+.new-listing__form-group label {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.new-listing-text-area {
+  min-width: 100%;
+  max-width: 100%;
+  padding: 1rem;
+  font-family: inherit;
+  min-height: max-content;
+}
+
+.new-listing__form-group-radio {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.radio-group,
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.radio-group label,
+.checkbox-group label {
+  text-transform: capitalize;
+  font-weight: 600;
+}
+
+.new-listing__form-group--flex {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.mb-fix {
+  margin-bottom: 2rem;
+}
+
+.image-upload {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.image-upload-input {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.upload-listing-images-btn {
+  padding: 1rem;
+  color: var(--color-secondary);
+  border: 1px solid currentColor;
+  background-color: transparent;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.btn-create-listing {
+  padding: 1rem 2rem;
+  text-transform: capitalize;
+  font-weight: bold;
+  background-color: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

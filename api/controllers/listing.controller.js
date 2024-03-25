@@ -1,22 +1,5 @@
 import Listing from "../models/listing.model.js";
 export const createListing = async (req, res, next) => {
-  // const {
-  //     title,
-  //     description,
-  //     address,
-  //     type,
-  //     offer,
-  //     regularPrice,
-  //     discountedPrice,
-  //     bedrooms,
-  //     bathrooms,
-  //     wifi,
-  //     parking,
-  //     swimmingPool,
-  //     gym,
-  //     furnished,
-  //     userRef
-  // } = req.body;
   if (
     req.body.offer === true &&
     req.body.discountedPrice > req.body.regularPrice

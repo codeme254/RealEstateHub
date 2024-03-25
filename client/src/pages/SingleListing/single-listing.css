@@ -1,0 +1,209 @@
+.single-listing {
+  width: 70vw;
+  margin: 1rem auto;
+}
+
+.flex-element_icon {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.listing__hero {
+  height: 30rem;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.offer-component {
+  z-index: 200;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+  transform: translateX(-50%);
+}
+
+.offer-component div {
+  background-color: var(--color-primary);
+  padding: 1rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.single-listing__regular-price {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: var(--color-primary);
+  padding: 1rem;
+  color: #fff;
+  z-index: 200;
+  border-radius: 5px;
+}
+
+.single-listing__regular-price > * {
+  font-size: 2rem;
+}
+
+.listing__hero img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: all 0.4s ease;
+  z-index: 100;
+}
+
+.listing__hero img:hover {
+  transform: scale(1.02);
+}
+
+.single-listing__title-address {
+  margin: 1rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.single-listing__amenities {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+}
+
+.bedrooms__bathrooms {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin: 2rem auto;
+  flex-wrap: wrap;
+}
+
+.single-listing__body {
+  display: flex;
+  gap: 5rem;
+}
+
+.single-listing__body--left {
+  width: 60vw;
+}
+
+.single-listing__body--right {
+  width: 30vw;
+}
+
+.single-listing__body--left p {
+  text-align: justify;
+  font-size: 1.35rem;
+}
+
+.single-listing-amenity__flex {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.single-listing-amenity__flex p {
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.single-listing__action-btn {
+  padding: 1rem 2rem;
+  text-transform: capitalize;
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: #fff;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-delete {
+  background-color: red;
+}
+
+.listing-owner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.listing-owner img {
+  --size: 4rem;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+}
+
+.listing-owner p {
+  font-weight: bold;
+}
+
+.listing-contact__text-input {
+  width: 100%;
+  padding: 1rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.single-listing__message-box {
+  font-family: inherit;
+  padding: 0.5rem;
+  font-weight: 500;
+  width: 100%;
+  resize: vertical;
+  min-height: 10rem;
+}
+
+.single-listing__contact-button {
+  width: 100%;
+  display: inline-block;
+  text-align: center;
+  padding: 1.5rem;
+  color: #fff;
+  background-color: var(--color-primary);
+  border: none;
+  outline: none;
+  text-transform: capitalize;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.listing__images-container {
+  margin-top: 2rem;
+}
+
+.listing__images-container h6 {
+  text-align: center;
+}
+
+.listing__images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin: 3rem auto;
+}
+
+.listing__images img {
+  width: 200px;
+  border-radius: 5px;
+  cursor: pointer;
+}

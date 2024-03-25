@@ -108,3 +108,21 @@
   border-radius: 5px;
   cursor: pointer;
 }
+
+.images_preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 2rem auto;
+  /* justify-content: center; */
+}
+
+.images_preview img {
+  --size: 10rem;
+  width: var(--size);
+  height: var(--size);
+  max-width: var(--size);
+  max-height: var(--size);
+  border-radius: 10px;
+}

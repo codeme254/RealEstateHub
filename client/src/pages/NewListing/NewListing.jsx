@@ -1,7 +1,12 @@
 import React, { useState } from "react";
+import uploadImage from "../../../utils/upload";
 import "./new-listing.css";
 
 function NewListing() {
+  const [images, setImages] = useState([]);
+  const [imgUrls, setImgUrls] = useState([]);
+  const [uploadingImages, setUploadingImages] = useState(false);
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -18,6 +23,7 @@ function NewListing() {
     furnished: false,
     gym: false,
   });
+
   const handleChange = (e) => {
     if (e.target.id === "sale" || e.target.id == "rent") {
       setFormData({
@@ -43,6 +49,24 @@ function NewListing() {
     ) {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     }
+  };
+
+  const handleUploadImages = async (e) => {
+    e.preventDefault();
+    if (images.length < 2) return alert("Please select at least 4 images");
+    setUploadingImages(true);
+    try {
+      const urlsArr = [];
+      for (let i = 0; i < images.length; i++) {
+        const url = await uploadImage(images[i]);
+        urlsArr.push(url);
+      }
+      setImgUrls(urlsArr);
+      setFormData({ ...formData, imgUrls: urlsArr });
+    } catch (e) {
+      alert("There was an error uploading, please try again");
+    }
+    setUploadingImages(false);
   };
   return (
     <div className="new-listing">
@@ -260,11 +284,27 @@ function NewListing() {
               className="image-upload-input"
               accept="image/*"
               multiple
+              onChange={(e) => setImages(e.target.files)}
             />
-            <button className="upload-listing-images-btn">upload</button>
+            <button
+              className="upload-listing-images-btn"
+              onClick={handleUploadImages}
+              disabled={uploadingImages}
+            >
+              {uploadingImages ? "Uploading images, please wait..." : "upload"}
+            </button>
           </div>
         </div>
-        <button className="btn-create-listing">create listing</button>
+        {imgUrls && (
+          <div className="images_preview">
+            {imgUrls.map((img, i) => (
+              <img src={img} key={i} width="300" height="300" />
+            ))}
+          </div>
+        )}
+        <button className="btn-create-listing" disabled={uploadingImages}>
+          create listing
+        </button>
       </form>
     </div>
   );

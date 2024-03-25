@@ -22,6 +22,20 @@ export const createListing = async (req, res, next) => {
   }
 };
 
+export const getSingleListing = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const listing = await Listing.findById(id).populate("userRef");
+    if (!listing)
+      return res
+        .status(400)
+        .json({ success: false, message: "Listing not found" });
+    return res.status(200).json({ success: true, data: listing });
+  } catch (e) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+};
+
 // images for testing the api
 // 'https://res.cloudinary.com/dz1yrbnpy/image/upload/v1711364014/bckxvn9bo39jpjtezeq0.jpg',
 // 'https://res.cloudinary.com/dz1yrbnpy/image/upload/v1711364016/xwmsmblj4azar2irbofe.jpg',

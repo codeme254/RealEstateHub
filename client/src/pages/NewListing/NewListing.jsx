@@ -363,9 +363,7 @@ function NewListing() {
             create listing
           </button>
         )}
-        {
-          createListingError && <p>{createListingError}</p>
-        }
+        {createListingError && <p>{createListingError}</p>}
       </form>
     </div>
   );

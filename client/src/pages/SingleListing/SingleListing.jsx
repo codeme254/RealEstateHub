@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "./single-listing.css";
 
 function SingleListing() {
   return (

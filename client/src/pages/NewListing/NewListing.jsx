@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import uploadImage from "../../../utils/upload";
 import "./new-listing.css";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function NewListing() {
   const [images, setImages] = useState([]);
   const [imgUrls, setImgUrls] = useState([]);
   const [uploadingImages, setUploadingImages] = useState(false);
+  const user = useSelector((state) => state.user.value);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) navigate("/sign-in");
+  }, [user]);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -50,7 +58,6 @@ function NewListing() {
       setFormData({ ...formData, [e.target.id]: e.target.value });
     }
   };
-
   const handleUploadImages = async (e) => {
     e.preventDefault();
     if (images.length < 2) return alert("Please select at least 4 images");
@@ -68,10 +75,17 @@ function NewListing() {
     }
     setUploadingImages(false);
   };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!user) return;
+    formData["userRef"] = user._id;
+  };
   return (
     <div className="new-listing">
-      <h2 className="create-listing-title">Create a listing</h2>
-      <form className="new-listing__form">
+      <h2 className="create-listing-title">
+        Hey {user && user.username}, Create a listing
+      </h2>
+      <form className="new-listing__form" onSubmit={handleSubmit}>
         <div className="new-listing__form-group">
           <label htmlFor="title" className="new-listing__form-group--label">
             title

@@ -9,6 +9,8 @@ function NewListing() {
   const [imgUrls, setImgUrls] = useState([]);
   const [uploadingImages, setUploadingImages] = useState(false);
   const user = useSelector((state) => state.user.value);
+  const [creatingListing, setCreatingListing] = useState(false);
+  const [createListingError, setCreateListingError] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -75,10 +77,31 @@ function NewListing() {
     }
     setUploadingImages(false);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) return;
     formData["userRef"] = user._id;
+    try {
+      setCreatingListing(true);
+      const response = await fetch("/api/listing/new", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      // console.log(data);
+      if (data.success) {
+        navigate(`/listing/${data.data._id}`);
+      } else {
+        setCreateListingError(data.message);
+      }
+      setCreatingListing(false);
+    } catch (e) {
+      setCreateListingError(e);
+      setCreatingListing(false);
+    }
   };
   return (
     <div className="new-listing">
@@ -303,7 +326,11 @@ function NewListing() {
             <button
               className="upload-listing-images-btn"
               onClick={handleUploadImages}
-              disabled={uploadingImages}
+              disabled={
+                uploadingImages ||
+                (user && user.userType === "demo-user") ||
+                creatingListing
+              }
             >
               {uploadingImages ? "Uploading images, please wait..." : "upload"}
             </button>
@@ -316,9 +343,26 @@ function NewListing() {
             ))}
           </div>
         )}
-        <button className="btn-create-listing" disabled={uploadingImages}>
-          create listing
-        </button>
+        {user && user.userType === "demo-user" && (
+          <p>Please create an account to unlock all features</p>
+        )}
+        {user && user.userType === "demo-user" ? (
+          <p>
+            We do not allow demo users to create a listing, please sign up for
+            an account to unlock all features
+          </p>
+        ) : (
+          <button
+            className="btn-create-listing"
+            disabled={
+              uploadingImages ||
+              (user && user.userType === "demo-user") ||
+              creatingListing
+            }
+          >
+            create listing
+          </button>
+        )}
       </form>
     </div>
   );

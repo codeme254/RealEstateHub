@@ -363,10 +363,12 @@ function NewListing() {
             create listing
           </button>
         )}
+        {
+          createListingError && <p>{createListingError}</p>
+        }
       </form>
     </div>
   );
 }
 
-// https://www.youtube.com/watch?v=ZdAcKVWA520
 export default NewListing;

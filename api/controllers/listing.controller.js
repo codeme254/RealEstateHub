@@ -36,6 +36,15 @@ export const getSingleListing = async (req, res) => {
   }
 };
 
+export const getAllListings = async (req, res, next) => {
+  try {
+    const listings = await Listing.find();
+    return res.status(200).json({ success: true, data: listings });
+  } catch (e) {
+    res.status(500).json({ success: false, message: e.message });
+  }
+};
+
 // images for testing the api
 // 'https://res.cloudinary.com/dz1yrbnpy/image/upload/v1711364014/bckxvn9bo39jpjtezeq0.jpg',
 // 'https://res.cloudinary.com/dz1yrbnpy/image/upload/v1711364016/xwmsmblj4azar2irbofe.jpg',
